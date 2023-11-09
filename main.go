@@ -5,31 +5,30 @@ import (
 	"strings"
 )
 
-func main() {
-	var concertName = "Go Concert"
-	const concertTickets = 50
-	var remainingTickets uint = 50
-	//Declaring an array (slice) to store the names of booking clients
-	bookings := []string {}
+const concertTickets = 50
+var concertName = "Go Concert"
+var remainingTickets uint = 50
+var bookings = []string {} //Declaring an array (slice) to store the names of booking clients
 
+func main() {
 	// Call greetUsers function and include parameters
-	greetUsers(concertName, concertTickets, remainingTickets)
+	greetUsers()
 
 	for {
 		// Call function for getting user input
 		firstName, lastName, email, userTickets := getUserInput()
 
 		// Call function for validating user input
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets, remainingTickets) 
+		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets) 
 
 			// BOOKING TICKETS!
 			if isValidName && isValidEmail && isValidTicketNumber {
 				
 				// Call function for booking tickets
-				bookTicket(remainingTickets, userTickets, bookings, firstName, lastName, email, concertName)
+				bookTicket(firstName, lastName, email)
 
 				// Call function to print first names
-				var firstNames := getFirstNames(bookings)
+				firstNames := getFirstNames()
 				fmt.Printf ("The first names of bookings are: %v\n", firstNames)
 
 							// exit application if no tickets are left
@@ -55,14 +54,14 @@ func main() {
 	}
 }
 
-func greetUsers(concertName string, concertTickets int, remainingTickets uint) {
+func greetUsers() {
 	fmt.Printf ("You are now in the %v bookings.\n", concertName)
 	fmt.Printf ("We have the total of %v tickets, to which %v are still available.\n", concertTickets, remainingTickets)
 	fmt.Println ("Please book your tickets here.")
 } 
 
 // Function for getting first names of concert goers
-func getFirstNames(bookings []string) []string {
+func getFirstNames([]string) []string {
 					//Print only first names
 					firstNames := []string {}
 					// For arrays and slices, range provides undex and value for each element we iterate through.
@@ -77,7 +76,7 @@ func getFirstNames(bookings []string) []string {
 }
 
 // Function for validating user input
-func validateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
+func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
 			// User input validations
 			isValidName := len(firstName) >= 2 && len(lastName) >= 2
 			isValidEmail := strings.Contains(email, "@")
@@ -108,7 +107,7 @@ func getUserInput () (string, string, string,uint) {
 	return firstName, lastName, email, userTickets
 }
 
-func bookTicket(remainingTickets uint, userTickets uint, bookings []string, firstName string, lastName string, email string, concertName string) {
+func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	//Logic for booking tickets
 	remainingTickets = concertTickets - userTickets
 
