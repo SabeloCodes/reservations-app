@@ -24,18 +24,9 @@ func main() {
 
 			// BOOKING TICKETS!
 			if isValidName && isValidEmail && isValidTicketNumber {
-				//Logic for booking tickets
-				remainingTickets = concertTickets - userTickets
-
-				/*The bookings slice will consist of the following:
-				This will dynamically add (append) entries to the slice without having to specify min/max or index position.
-				*/
-				bookings = append(bookings, firstName + " " + lastName)
-
-				//Lets see whats inside the bookings array
-				fmt.Printf ("Here are all the bookings %v \n", bookings)
-
-				fmt.Printf ("Thank you %v %v for buying %v tickets, confirmation will be sent to %v soon.\n", firstName, lastName, userTickets, email)
+				
+				// Call function for booking tickets
+				bookTicket(remainingTickets, userTickets, bookings, firstName, lastName, email, concertName)
 
 				// Call function to print first names
 				var firstNames := getFirstNames(bookings)
@@ -116,4 +107,18 @@ func getUserInput () (string, string, string,uint) {
 
 	return firstName, lastName, email, userTickets
 }
+
+func bookTicket(remainingTickets uint, userTickets uint, bookings []string, firstName string, lastName string, email string, concertName string) {
+	//Logic for booking tickets
+	remainingTickets = concertTickets - userTickets
+
+	/*The bookings slice will consist of the following:
+	This will dynamically add (append) entries to the slice without having to specify min/max or index position.
+	*/
+	bookings = append(bookings, firstName + " " + lastName)
+	//Lets see whats inside the bookings array
+	fmt.Printf ("Thank you %v %v for buying %v tickets, confirmation will be sent to %v soon.\n", firstName, lastName, userTickets, email)
+	fmt.Printf ("Only %v remaining tickets for %v\n", remainingTickets, concertName)
+}
+
 
