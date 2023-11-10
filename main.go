@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"reservations-app/common"
 )
 
 const concertTickets = 50
@@ -19,13 +20,13 @@ func main() {
 		firstName, lastName, email, userTickets := getUserInput()
 
 		// Call function for validating user input
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets) 
+		isValidName, isValidEmail, isValidTicketNumber := common.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets) 
 
 			// BOOKING TICKETS!
 			if isValidName && isValidEmail && isValidTicketNumber {
 				
 				// Call function for booking tickets
-				bookTicket(firstName, lastName, email)
+				bookTicket(userTickets, firstName, lastName, email)
 
 				// Call function to print first names
 				firstNames := getFirstNames()
@@ -61,7 +62,7 @@ func greetUsers() {
 } 
 
 // Function for getting first names of concert goers
-func getFirstNames([]string) []string {
+func getFirstNames() []string {
 					//Print only first names
 					firstNames := []string {}
 					// For arrays and slices, range provides undex and value for each element we iterate through.
@@ -73,15 +74,6 @@ func getFirstNames([]string) []string {
 						firstNames = append(firstNames, names[0])
 					}
 					return firstNames
-}
-
-// Function for validating user input
-func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
-			// User input validations
-			isValidName := len(firstName) >= 2 && len(lastName) >= 2
-			isValidEmail := strings.Contains(email, "@")
-			isValidTicketNumber := userTickets > 0 && userTickets <= remainingTickets
-			return isValidName, isValidEmail, isValidTicketNumber
 }
 
 // Function for getting user input
